@@ -1,3 +1,21 @@
+FROM python:3.9-slim
+
+# Устанавливаем рабочую директорию
+WORKDIR /app
+
+# Устанавливаем зависимости системы
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    libssl-dev \
+    libffi-dev \
+    python3-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Копируем файлы проекта в контейнер
+# Предполагается, что папка FINAC PAY находится на том же уровне, что и Dockerfile
+COPY ./FINAC PAY /app
+
+# Устанавливаем зависимости Python
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Устанавливаем переменные окружения
